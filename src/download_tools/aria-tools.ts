@@ -263,9 +263,9 @@ export async function extractFile(dlDetails: DlVars, filePath: string, fileSize:
         return new Promise<{ filePath: string, filename: string, size: number }>((resolve, reject) => {
           dlDetails.extractedFileName = fileNameWithoutExt;
           dlDetails.extractedFileSize = downloadUtils.formatSize(fileSize);
-          unzip.extract(realFilePath, fileNameWithoutExt, fileExtension, (unziperr: string, size: number, rfp: string) => {
+          unzip.extract(realFilePath, fileNameWithoutExt, fileExtension, dlDetails.unzipPassword, (unziperr: string, size: number, rfp: string) => {
             if (unziperr && !rfp) {
-              reject(unziperr);
+              reject(new Error(unziperr));
             } else {
               console.log('Unzip complete');
               dlDetails.isExtracting = false;
@@ -292,7 +292,6 @@ export async function extractFile(dlDetails: DlVars, filePath: string, fileSize:
       throw new Error('Extension is not supported for unzipping\nSupported extensions are: ' + supportedArchive.toString());
     }
   } catch (error) {
-    console.log('In catch');
     throw new Error(error);
   }
 }

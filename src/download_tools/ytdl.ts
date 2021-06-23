@@ -32,7 +32,8 @@ const dlDetails: DlVars = {
     lastUploadCheckTimestamp: 0,
     isExtracting: false,
     extractedFileName: '',
-    extractedFileSize: ''
+    extractedFileSize: '',
+    unzipPassword: ''
 };
 
 const supportedQualities = [
